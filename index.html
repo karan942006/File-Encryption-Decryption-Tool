@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SecureFile — Free, secure, client-side file encryption and decryption tool. Uses robust PBKDF2 and AES-256 Fernet compatible algorithm. Files never leave your browser.">
+    <title>🔐 SecureFile — File Encryption & Decryption Tool</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Abstract background decorations -->
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title">🔐 SecureFile</h1>
+            <p class="app-subtitle">Secure your files client-side with PBKDF2 and AES-256. 100% private, zero server uploads.</p>
+        </header>
+
+        <main class="app-main">
+            <!-- 1. File Picker & Drag-and-Drop Card -->
+            <section class="card file-card" id="dropZone">
+                <h2 class="section-title">Selected File</h2>
+                <div class="drop-zone-inner">
+                    <input type="file" id="fileInput" class="file-input-hidden">
+                    <div class="drop-zone-prompt" id="dropPrompt">
+                        <div class="upload-icon">📁</div>
+                        <p class="prompt-text">Drag & drop your file here or <span class="highlight-text">Browse Files</span></p>
+                        <p class="sub-prompt-text">Any file type up to 50MB supported</p>
+                    </div>
+                    
+                    <!-- File Metadata Info (Hidden by default, shown when file selected) -->
+                    <div class="file-metadata" id="fileMetadata" style="display: none;">
+                        <div class="meta-header">
+                            <span class="file-icon" id="metaIcon">📄</span>
+                            <div class="meta-title-group">
+                                <span class="meta-filename" id="metaFilename">file.txt</span>
+                                <span class="meta-badge" id="metaStatus">Ready to Encrypt</span>
+                            </div>
+                            <button type="button" class="btn-clear-file" id="btnClearFile" title="Clear selection">×</button>
+                        </div>
+                        <div class="meta-grid">
+                            <div class="meta-item">
+                                <span class="meta-label">Size:</span>
+                                <span class="meta-value" id="metaSize">12 KB</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Type:</span>
+                                <span class="meta-value" id="metaType">TXT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Password Entry Card -->
+            <section class="card password-card">
+                <div class="pwd-header">
+                    <h2 class="section-title">Password Authentication</h2>
+                    <span class="strength-label" id="strengthText"></span>
+                </div>
+                <div class="pwd-input-wrapper">
+                    <input type="password" id="passwordInput" placeholder="Enter security password..." autocomplete="off">
+                    <button type="button" class="btn-toggle-pwd" id="btnTogglePwd" title="Show Password">👁️</button>
+                </div>
+                
+                <!-- Password Strength Visual Bar -->
+                <div class="strength-bar-container">
+                    <div class="strength-bar" id="strengthBar"></div>
+                </div>
+            </section>
+
+            <!-- 3. Primary Action Buttons -->
+            <div class="actions-group">
+                <button type="button" class="btn-action btn-encrypt" id="btnEncrypt" disabled>
+                    <span class="btn-icon">🔒</span> Encrypt File
+                </button>
+                <button type="button" class="btn-action btn-decrypt" id="btnDecrypt" disabled>
+                    <span class="btn-icon">🔓</span> Decrypt File
+                </button>
+            </div>
+
+            <!-- 4. Result / Success Section -->
+            <section class="card result-card" id="resultCard" style="display: none;">
+                <div class="result-header">
+                    <span class="result-success-icon">✅</span>
+                    <h3 class="result-title" id="resultTitle">File Processed Successfully!</h3>
+                </div>
+                <p class="result-desc" id="resultDesc">Your file is ready. The download should start automatically.</p>
+                <div class="result-actions">
+                    <a href="#" id="btnDownload" class="btn-download-link">💾 Download File</a>
+                    <button type="button" id="btnCopyName" class="btn-copy-name">📋 Copy Filename</button>
+                </div>
+            </section>
+
+            <!-- 5. Error Alert Box -->
+            <div class="error-alert" id="errorAlert" style="display: none;">
+                <span class="error-icon">❌</span>
+                <span class="error-msg" id="errorMsg">Incorrect password or tampered file. Decryption failed.</span>
+                <button type="button" class="btn-close-error" id="btnCloseError">×</button>
+            </div>
+
+            <!-- 6. Recent Activity Log -->
+            <section class="card activity-card">
+                <h2 class="section-title">Recent Activity</h2>
+                <div class="activity-list" id="activityList">
+                    <div class="activity-empty">No recent activity. Encrypt or decrypt files to log history.</div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="compatibility-badge">
+                <span>🔄 Fully compatible with the SecureFile Python desktop tool.</span>
+            </div>
+            <p class="footer-author">Made with ❤️ for Cybersecurity Course | <a href="https://github.com/karan942006/File-Encryption-Decryption-Tool" target="_blank" rel="noopener">GitHub Repository</a></p>
+        </footer>
+    </div>
+
+    <!-- Processing Overlay / Loader Spinner -->
+    <div class="processing-overlay" id="processingOverlay" style="display: none;">
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <p class="spinner-text">Performing cryptographic operations...</p>
+            <p class="spinner-subtext">Deriving secure 256-bit PBKDF2 keys (100,000 iterations)</p>
+        </div>
+    </div>
+
+    <!-- Javascript Logic -->
+    <script src="app.js"></script>
+</body>
+</html>

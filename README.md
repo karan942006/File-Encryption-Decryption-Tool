@@ -1,22 +1,38 @@
 # 🔐 SecureFile — File Encryption & Decryption Tool
 
-SecureFile is a complete, professional desktop application written in Python 3 using Tkinter for its GUI and AES-256 (via the cryptography Fernet library) for robust, authenticated file encryption and decryption.
+SecureFile is a secure, professional cryptographic tool available as a **Live Web Application** and a **Python Desktop Application**. It uses PBKDF2 for robust key stretching (100,000 iterations) and AES-256 (via the Fernet protocol) for authenticated, tamper-proof file encryption and decryption.
 
+🚀 **[Access the Live Web Application here!](https://karan942006.github.io/File-Encryption-Decryption-Tool/)**
+
+[![Web App Status](https://img.shields.io/badge/Web_App-Live_&_Secure-success.svg)](https://karan942006.github.io/File-Encryption-Decryption-Tool/)
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+> [!IMPORTANT]
+> **100% Client-Side Privacy:** Both the web tool and the desktop app run completely locally on your computer. Your files and passwords are never uploaded to any server or shared across the network.
 
 ---
 
 ## Table of Contents
-1. [Features](#features)
-2. [Screenshots](#screenshots)
-3. [Installation](#installation)
-4. [How to Use](#how-to-use)
-5. [Technology Stack](#technology-stack)
-6. [File Structure](#file-structure)
-7. [Future Improvements](#future-improvements)
-8. [License](#license)
-9. [Author](#author)
+1. [Live Web App](#live-web-app)
+2. [Features](#features)
+3. [Screenshots](#screenshots)
+4. [Installation](#installation)
+5. [How to Use](#how-to-use)
+6. [Technology Stack](#technology-stack)
+7. [File Structure](#file-structure)
+8. [Future Improvements](#future-improvements)
+9. [License](#license)
+10. [Author](#author)
+
+---
+
+## Live Web App
+The Live Web Application is hosted via GitHub Pages and is fully compatible with files encrypted by the Python desktop tool.
+- **URL**: [https://karan942006.github.io/File-Encryption-Decryption-Tool/](https://karan942006.github.io/File-Encryption-Decryption-Tool/)
+- **Zero Install**: Run instantly in any modern desktop or mobile browser.
+- **Offline Capable**: Once loaded, it can run 100% offline (without any internet connection) since all cryptography is performed locally via the Web Crypto API.
+- **Cross-Compatibility**: Encrypt in Python, decrypt in Web; or encrypt in Web, decrypt in Python.
 
 ---
 
